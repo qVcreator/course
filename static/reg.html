@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PlusUltra</title>
+  <link rel="stylesheet" href="asserts/css/style.css">
+</head>
+<body>
+  <header>
+    <div id="logo" onclick="slowScroll('#reg')">
+      <a href="home">PlusUltra</a>
+  </header>
+
+  <div id="reg">
+    <div id="rectangle">
+      
+      <div><a class="log_in" href="log">Вход</a></div>
+      <div><span style="color: black;" class="reg_in">Регистрация</span></div>
+      <form action="#" method="post" id="form_input_reg" >
+      <input type="email" placeholder="Введите почту" name="mail" id="mail"><br>
+      <input type="password" placeholder="Введите пароль" name="password" id="password"><br>
+      <input type="password" placeholder="Повторите пароль" name="password2" id="password2"><br>
+      <p id="regStatus" style="color: red; font-size: small; margin-left: auto;"></p>
+      <button type="submit" id="logg" class="btn_reg" onclick="">Регистрация</button>
+      </form>
+      <script>
+        const regForm = document.getElementById('form_input_reg');
+        const regStatus = document.getElementById('regStatus');
+        
+        regForm.addEventListener('submit', (event)=>{
+          event.preventDefault();
+      
+          const data = Object.fromEntries(new FormData(event.target).entries());
+          
+          const req = new XMLHttpRequest();
+          req.open('POST', 'http://localhost:3000/regform');
+          req.responseType = "json";
+          req.setRequestHeader('Content-Type', 'application/json');
+      
+          req.onreadystatechange = function() {
+            if (this.readyState != 4) return;
+            console.log(typeof this.response)
+            if (this.response.message === ''){
+              document.location ='http://localhost:3000/course.html'
+            };
+            regStatus.innerText = this.response.message;
+          }
+        
+          req.send(JSON.stringify(data));      
+        })
+      </script>
+    </div>
+  </div>
+
+</body>

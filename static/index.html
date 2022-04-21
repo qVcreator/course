@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PlusUltra</title>
+  <link rel="stylesheet" href="asserts/css/style.css">
+</head>
+<body>
+  <header>
+    <div id="logo" onclick="slowScroll('#top')">
+      <span>PlusUltra</span>
+    </div>
+    <div id="about">
+      <a href="#" title="Возможности" onclick="slowScroll('#main')">Возможности</a>
+      <a href="#" onclick="slowScroll('#overview')" title="Преимущества">Преимущества</a>
+      <a href="#" onclick="slowScroll('#contacts')" title="Пробное заанятие">Пробное заанятие</a>
+      <a href="#" onclick="slowScroll('#faq')" title="Ответы на вопросы">FAQ</a>
+      <a href="log" title="Личный кабинет" >Личный кабинет</a>
+    </div>
+  </header>
+
+  <div id="top">
+    <h1>Обучение</h1>
+    <h3>Без кнута, но с пряником!</h3>
+  </div>
+
+  <div id="main">
+    <div class="intro">
+      <h2>Хочешь подготовиться с 0 до 100?</h2>
+      <span>Тебе точно к нам!</span>
+    </div>
+    <div class="text">
+      <span>Задумывался ли ты когда-нибудь, что обучение может быть не в тягость? А ведь уже давно существует формат, который поможет тебе полюбить обучение и подготовиться на максимальный балл без особых усилий, все что требуется, это телефон или компютер и совсем немного желания идти к успеху, а остальное мы возьмем на себя!</span>
+    </div>
+  </div>
+
+  <div id="overview">
+    <h2>Преимущества</h2>
+    <h4>с нами все проще</h4>
+
+    <div class="img">
+      <img src="https://static.tildacdn.com/tild6664-6334-4532-b639-353731366531/Group_22.svg" width="60" height="60" alt="">
+      <span>Твой преподаватель - человек, который сдал ЕГЭ на высший балл</span>
+    </div>
+    <div class="img">
+      <img src="https://static.tildacdn.com/tild3034-3833-4866-b934-313436363065/002-feedback.svg" width="60" height="60" alt="">
+      <span>Все онлайн-разборы, шпаргалки и конспекты сохраняются</span>
+    </div>
+    <div class="img">
+      <img src="https://static.tildacdn.com/tild3936-6430-4030-b939-363738396432/Group_26.svg" width="60" height="60" alt="">
+      <span>Смотри вебинары в любое время и в любом месте</span>
+    </div>
+    <div class="img">
+      <img src="https://static.tildacdn.com/tild6361-3565-4632-a663-326163346339/Group_24.svg" width="60" height="60" alt="">
+      <span>Куратор - человек, который помогает тебе с домашними заданиями и разбором сложных тем</span>
+    </div>
+    <div class="img">
+      <img src="https://static.tildacdn.com/tild3034-3833-4866-b934-313436363065/002-feedback.svg" width="60" height="60" alt="">
+      <span>Все онлайн-разборы, шпаргалки и конспекты сохраняются</span>
+    </div>
+    <div class="img">
+        <img src="https://static.tildacdn.com/tild3933-6533-4937-a631-383730393338/Group_25.svg" width="60" height="60" alt="">
+        <span>ДЗ и пробники, которые позволяют отслеживать твой прогресс, составляются экспертами ЕГЭ</span>
+      </div>
+    <div class="img">
+        <img src="https://static.tildacdn.com/tild3630-3937-4832-a165-316364363936/Group_23.svg" width="60" height="60" alt="">
+        <span>Твой персональный менеджер ответит тебе в любое время на все твои вопросы</span>
+    </div>  
+  </div>
+
+  <div id="contacts">
+    <center><h5>Записаться на пробное занятие</h5></center>
+    <form method="POST" id="form_input" action="#">
+      <h4>Знаком <span>*</span> обозначается обязательно поле</h4>
+      <label for="name">Имя <span>*</span></label><br>
+      <input type="text" placeholder="Введите имя" name="name" id="name"><br>
+      <label for="vk">id от ВК<span>*</span></label><br>
+			<input type="text" placeholder="Введите id ВК" name="vk" id="vk"><br>
+			<label for="message">Ваша почта</label><br>
+			<input type="email" placeholder="Введите вашу почту" name="mail" id="mail"><br>
+      <p id="status" style="color: lightcoral;"></p>
+      <p id="deadline"></p>
+      <button type="submit" id="mess_send" class="btn" onclick="">Отправить</button>
+    </form>
+    <script>
+      let deadLine = new Date(2022, 5, 4);
+      let now = new Date();
+      var lefttimeday;
+      var leftimehour;
+      const showdl = document.getElementById('deadline');
+      if(deadLine > now){
+        let lefttime  = deadLine-now;
+        lefttimeday = Math.round(lefttime/86400000);
+        leftimehour = Math.round(24-now.getHours());
+      }else{
+        lefttimeday = 0;
+        leftimehour = 0;
+      }
+      showdl.innerText = `До конца записи осталось ${lefttimeday} дн. ${leftimehour} ч.`;
+
+      const regForm = document.getElementById('form_input');
+      
+      
+      regForm.addEventListener('submit', (event)=>{
+        event.preventDefault();
+    
+        const data = Object.fromEntries(new FormData(event.target).entries());
+        const status = document.getElementById('status');
+        const req = new XMLHttpRequest();
+        req.open('POST', 'http://localhost:3000/order');
+        req.responseType = "json";
+        req.setRequestHeader('Content-Type', 'application/json');
+    
+        req.onreadystatechange = function() {
+          if (this.readyState != 4) return;
+          console.log(typeof this.response)
+          status.innerText = this.response.message;
+        }
+      
+        req.send(JSON.stringify(data));      
+      })
+    </script>
+  </div>
+
+  <div id="faq">
+    <div>
+      <span class="title">Оплата</span><br>
+      <span class="heading">Как будет проходит оплата?</span>
+      <p>Оплата проходит через платформу в разделе курсы, где вы можете найти необходимый вам курс и произвести оплату, введя данные карты. Также вы можете связаться с менеджером и он полностью проконсультирует вас, как произвести оплату.</p>
+    </div>
+
+    <div>
+      <span class="title"></span><br>
+      <span class="heading"></span>
+      <p>                                              </p>
+    </div>
+
+    <div>
+      <span class="title">Гарантии</span><br>
+      <span class="heading">Какие гарантии есть</span>
+      <p>Гарантией выполнения и предоставления услуг является ваш чек, который приходит к вам на почту после оплаты вместе с договором публичной оферты.</p>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    function slowScroll(id) {
+      $('html, body').animate({
+        scrollTop: $(id).offset().top
+      }, 500);
+    }
+
+    $(document).on("scroll", function () {
+      if($(window).scrollTop() === 0)
+        $("header").removeClass("fixed");
+      else
+        $("header").attr("class", "fixed");
+    });
+  </script>
+</body>
+</html>
