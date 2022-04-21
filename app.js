@@ -51,10 +51,28 @@ app.get('/reg', (req, res) => {
   res.sendFile(__dirname + '/static/reg.html')
 })
 
-app.post('/log', (req, res)=>{
+app.post('/logform', (req, res)=>{
   if(!req.body) return res.sendStatus(400);
   console.log(req.body);
   var userLogin = req.body.login;
+  var userPassword = req.body.password;
+  var isLoginCorrect = false;
+  var isPasswordCorrect = false;
+
+  for(let i = 0; i<registeredUsers.length; i++){
+    if(userLogin === JSON.parse(registeredUsers[i]).login &&
+     userPassword === JSON.parse(registeredUsers[i]).password){
+      isLoginCorrect = true;
+      isPasswordCorrect = true;
+    }
+    console.log(isLoginCorrect, isPasswordCorrect);
+    if(isLoginCorrect === true && isPasswordCorrect === true){
+      res.json({message: ''}).end();
+    }else{
+      res.json({message: '*Неверный логин или пароль'}).end();
+    }
+  }
+
 })
 
 app.post('/regform', (req, res)=>{

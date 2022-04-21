@@ -19,10 +19,37 @@
       <div><span style="color: black;" class="log_in">Вход</span></div>
       <div><a class="reg_in" href="reg" >Регистрация</a></div>
       <form method="POST" id="form_input_reg" action="#">
-      <input type="text" placeholder="Введите логин" name="login" id="login"><br>
-      <input type="text" placeholder="Введите пароль" name="password" id="password"><br>
-      <button id="logg" class="btn_reg" onclick="">Войти</button>
+      <input type="email" placeholder="Введите логин" name="login" id="login"><br>
+      <input type="password" placeholder="Введите пароль" name="password" id="password"><br>
+      <p id="logStatus" style="color: red; font-size: small; margin-left: auto;"></p>
+      <button type="submit" id="logg" class="btn_reg" onclick="">Войти</button>
       </form>
+      <script>
+        const logForm = document.getElementById('form_input_reg');
+        const logStatus = document.getElementById('logStatus');
+        
+        logForm.addEventListener('submit', (event)=>{
+          event.preventDefault();
+      
+          const data = Object.fromEntries(new FormData(event.target).entries());
+          
+          const req = new XMLHttpRequest();
+          req.open('POST', 'http://localhost:3000/logform');
+          req.responseType = "json";
+          req.setRequestHeader('Content-Type', 'application/json');
+      
+          req.onreadystatechange = function() {
+            if (this.readyState != 4) return;
+            console.log(typeof this.response)
+            if (this.response.message === ''){
+              document.location ='http://localhost:3000/course.html'
+            };
+            logStatus.innerText = this.response.message;
+          }
+        
+          req.send(JSON.stringify(data));      
+        })
+      </script>
     </div>
   </div>
 
