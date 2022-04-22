@@ -44,6 +44,7 @@
             if (this.response.message === ''){
               document.location ='http://localhost:3000/course.html'
             };
+            localStorage.setItem('access', '1');
             logStatus.innerText = this.response.message;
           }
         
