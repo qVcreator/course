@@ -121,7 +121,7 @@ app.post("/order", (req, res) => {
         orderedArr.push(user);
         fs.writeFileSync(__dirname+'/order.json', JSON.stringify(orderedArr));
         ordered += 1;
-        res.json({message: ''}).end();
+        res.json({error: true , message: 'Вы записались на пробное занятие!'}).end();
       }else{
         res.json({error: true , message: '*Вы уже зарегестрировались'}).end();
       }
